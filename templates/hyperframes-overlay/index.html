@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Workflow Sans";
+        src:
+          local("PingFang SC"),
+          local("Microsoft YaHei"),
+          local("Noto Sans CJK SC");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: block;
+      }
+
+      :root {
+        --cream: #f4eee9;
+        --ink: #18212a;
+        --blue: #afc3d4;
+        --gold: #b8945c;
+        --card: rgba(255, 253, 252, 0.94);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body,
+      #root {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: transparent !important;
+        font-family: "Workflow Sans", sans-serif;
+      }
+
+      #root {
+        position: relative;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .scene-inner {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+      }
+
+      .left-card {
+        position: absolute;
+        top: 420px;
+        left: 54px;
+        width: 390px;
+        padding: 34px;
+        border: 2px solid rgba(184, 148, 92, 0.32);
+        border-radius: 34px;
+        color: var(--ink);
+        background: var(--card);
+        box-shadow: 0 24px 70px rgba(24, 33, 42, 0.18);
+      }
+
+      .eyebrow {
+        color: var(--gold);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 5px;
+      }
+
+      h1 {
+        margin-top: 22px;
+        font-size: 48px;
+        line-height: 1.25;
+      }
+
+      p {
+        margin-top: 20px;
+        color: rgba(24, 33, 42, 0.72);
+        font-size: 28px;
+        line-height: 1.5;
+      }
+
+      .flow {
+        display: grid;
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .step {
+        padding: 18px 22px;
+        border-radius: 20px;
+        background: rgba(175, 195, 212, 0.35);
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .face-safe-guide {
+        position: absolute;
+        top: 280px;
+        right: 40px;
+        width: 500px;
+        height: 1120px;
+        border: 3px dashed rgba(184, 148, 92, 0);
+        border-radius: 250px;
+      }
+
+      /* During authoring, change the guide alpha to 0.35. Keep it at 0 for render. */
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="12"
+      data-width="1080"
+      data-height="1920"
+      data-fps="30"
+    >
+      <div class="face-safe-guide"></div>
+
+      <section
+        id="scene1"
+        class="clip scene"
+        data-start="0"
+        data-duration="6"
+        data-track-index="1"
+      >
+        <div id="scene1-inner" class="scene-inner">
+          <div id="hook-card" class="left-card">
+            <div class="eyebrow">HOOK</div>
+            <h1>一句核心结论</h1>
+            <p>信息卡只放在人物留白侧，不遮挡人脸。</p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="scene2"
+        class="clip scene"
+        data-start="6"
+        data-duration="6"
+        data-track-index="2"
+      >
+        <div id="scene2-inner" class="scene-inner">
+          <div id="flow-card" class="left-card">
+            <div class="eyebrow">WORKFLOW</div>
+            <h1>把步骤接起来</h1>
+            <div class="flow">
+              <div class="step">输入</div>
+              <div class="step">处理</div>
+              <div class="step">输出</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const timeline = gsap.timeline({
+        paused: true,
+        defaults: { ease: "power3.out" },
+      });
+
+      timeline.fromTo(
+        "#scene1-inner",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3 },
+        0
+      );
+      timeline.fromTo(
+        "#hook-card",
+        { opacity: 0, x: -70, scale: 0.96 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.75 },
+        0.25
+      );
+
+      timeline.fromTo(
+        "#scene2-inner",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3 },
+        6
+      );
+      timeline.fromTo(
+        "#flow-card",
+        { opacity: 0, x: -70, scale: 0.96 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.75 },
+        6.25
+      );
+      timeline.fromTo(
+        ".step",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.45, stagger: 0.25 },
+        6.8
+      );
+
+      window.__timelines.main = timeline;
+    </script>
+  </body>
+</html>
