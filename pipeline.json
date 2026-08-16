@@ -1,0 +1,65 @@
+{
+  "name": "content-os-pipeline",
+  "version": "2.0.0",
+  "description": "Human-gated content pipeline from topic to diagnosed draft.",
+  "stages": [
+    {
+      "id": "seed",
+      "label": "播种（输入）",
+      "owner": "human+writer",
+      "executor": "xhs-post-writer",
+      "output": "confirmed content seed",
+      "gate": "human confirms topic, audience and intended change"
+    },
+    {
+      "id": "sprout",
+      "label": "发芽",
+      "owner": "writer+human",
+      "executor": "xhs-post-writer",
+      "output": "four mechanism-distinct sprouts",
+      "gate": "human selects one or more sprouts"
+    },
+    {
+      "id": "grow",
+      "label": "成长（给初稿）",
+      "owner": "writer",
+      "executor": "xhs-post-writer",
+      "internalExecutors": [
+        "xiaohongshu-viral-director"
+      ],
+      "output": "complete draft V1 with evidence slots",
+      "gate": "human reads and confirms the complete draft"
+    },
+    {
+      "id": "trim",
+      "label": "修剪",
+      "owner": "dbs-content+human",
+      "executor": "dbs-content",
+      "external": true,
+      "output": "content diagnosis and first action",
+      "gate": "human chooses which diagnoses to apply"
+    }
+  ],
+  "rules": {
+    "visibleStagesOnly": true,
+    "oneActiveStage": true,
+    "displayDoesNotMeanWrite": true,
+    "noFabricatedEvidence": true,
+    "noAutomaticRewriteDuringTrim": true
+  },
+  "dependencies": {
+    "bundled": [
+      "content-os-pipeline",
+      "xhs-post-writer",
+      "xiaohongshu-viral-director"
+    ],
+    "external": [
+      {
+        "name": "dbs-content",
+        "source": "dontbesilent2025/dbskill",
+        "license": "CC BY-NC 4.0",
+        "install": "npx -y skills add dontbesilent2025/dbskill -g --all"
+      }
+    ]
+  }
+}
