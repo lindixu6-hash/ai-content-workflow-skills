@@ -27,8 +27,31 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Check production readiness
+        id: readiness
         uses: lindixu6-hash/awesome-agentic-engineering@v0
         with:
           card: agent-card.json
           min-score: "10"
           fail-below: "true"
+
+      - name: Audit unresolved launch blockers
+        id: blocker-audit
+        continue-on-error: true
+        uses: lindixu6-hash/awesome-agentic-engineering@v0
+        with:
+          card: agent-card.json
+          min-score: "10"
+          fail-below: "true"
+          fail-on-blockers: "true"
+
+      - name: Verify readiness debt is explicit
+        env:
+          SCORE_PASSED: ${{ steps.readiness.outputs.passed }}
+          AUDIT_OUTCOME: ${{ steps.blocker-audit.outcome }}
+          AUDIT_PASSED: ${{ steps.blocker-audit.outputs.passed }}
+          BLOCKER_COUNT: ${{ steps.blocker-audit.outputs.blocker-count }}
+        run: |
+          test "$SCORE_PASSED" = "true"
+          test "$AUDIT_OUTCOME" = "failure"
+          test "$AUDIT_PASSED" = "false"
+          test "$BLOCKER_COUNT" = "3"
