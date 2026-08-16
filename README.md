@@ -1,5 +1,7 @@
 # Content OS Pipeline
 
+[![Agent Readiness](https://github.com/lindixu6-hash/ai-content-workflow-skills/actions/workflows/agent-readiness.yml/badge.svg)](https://github.com/lindixu6-hash/ai-content-workflow-skills/actions/workflows/agent-readiness.yml)
+
 把一个模糊选题变成经过诊断的完整初稿，同时保留创作者的判断权。
 
 ```text
@@ -113,6 +115,11 @@ python3 tools/validate_pipeline.py
 | `dbs-content` | 修剪诊断 | 外部依赖，由总控调用 |
 
 机器可读的阶段、依赖和人工门见 [`pipeline.json`](pipeline.json)。
+
+生产边界、工具权限、上线阻塞项与十项质量评分见
+[`agent-card.json`](agent-card.json)。CI 使用
+[Agent Production Readiness Gate](https://github.com/lindixu6-hash/awesome-agentic-engineering)
+验证最低上线分数。
 
 ## 关键约束
 
