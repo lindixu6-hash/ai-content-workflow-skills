@@ -1,0 +1,34 @@
+name: Agent Readiness
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "agent-card.json"
+      - "pipeline.json"
+      - "skills/**"
+      - ".github/workflows/agent-readiness.yml"
+  pull_request:
+    paths:
+      - "agent-card.json"
+      - "pipeline.json"
+      - "skills/**"
+      - ".github/workflows/agent-readiness.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check production readiness
+        uses: lindixu6-hash/awesome-agentic-engineering@v0
+        with:
+          card: agent-card.json
+          min-score: "10"
+          fail-below: "true"

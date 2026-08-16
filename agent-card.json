@@ -1,0 +1,59 @@
+{
+  "name": "Human-Gated Content OS",
+  "version": "2.0.0",
+  "owner": "Content OS maintainers",
+  "users": [
+    "Chinese social content creators",
+    "AI-assisted writing teams"
+  ],
+  "workflow": "Turn a confirmed topic into four mechanism-distinct angles, a complete evidence-constrained draft, and a human-selected revision plan.",
+  "non_goals": [
+    "Publish content without human approval",
+    "Invent personal experience or supporting evidence",
+    "Choose the final angle on behalf of the creator",
+    "Write private corpora or confidential company material into the public repository"
+  ],
+  "tools": [
+    {
+      "name": "content-os-pipeline",
+      "purpose": "Route the four-stage workflow and enforce human gates",
+      "access": "read_write",
+      "approval_required": true
+    },
+    {
+      "name": "xhs-post-writer",
+      "purpose": "Generate angles and evidence-constrained drafts",
+      "access": "read_write",
+      "approval_required": true
+    },
+    {
+      "name": "xiaohongshu-viral-director",
+      "purpose": "Design platform-specific structure and distribution assets",
+      "access": "read",
+      "approval_required": false
+    },
+    {
+      "name": "dbs-content",
+      "purpose": "Diagnose draft quality before the creator selects revisions",
+      "access": "read",
+      "approval_required": false
+    }
+  ],
+  "launch_blockers": [
+    "Needs behavioral eval fixtures for fabricated evidence and stage skipping",
+    "Needs an explicit recovery path when an external Skill is unavailable",
+    "Needs token and generation-cost budgets for long drafting sessions"
+  ],
+  "scorecard": {
+    "goal_clarity": 2,
+    "tool_permissions": 1,
+    "memory": 1,
+    "evals": 1,
+    "failure_handling": 1,
+    "security": 1,
+    "observability": 1,
+    "cost_control": 0,
+    "human_review": 2,
+    "documentation": 2
+  }
+}
