@@ -119,7 +119,9 @@ python3 tools/validate_pipeline.py
 生产边界、工具权限、上线阻塞项与十项质量评分见
 [`agent-card.json`](agent-card.json)。CI 使用
 [Agent Production Readiness Gate](https://github.com/lindixu6-hash/awesome-agentic-engineering)
-验证最低上线分数。
+验证最低上线分数，并独立运行 `draft-only` 风险 Profile 审计。当前 12/20
+评分能通过项目设置的 10/20 兼容门槛，但由于总分不足且仍有 3 个显式上线阻塞项，
+风险 Profile 会按预期失败；这两个结论不会互相覆盖。
 
 ## 关键约束
 

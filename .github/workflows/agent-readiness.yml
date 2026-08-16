@@ -44,14 +44,28 @@ jobs:
           fail-below: "true"
           fail-on-blockers: "true"
 
+      - name: Audit draft-only risk profile
+        id: profile-audit
+        continue-on-error: true
+        uses: lindixu6-hash/awesome-agentic-engineering@v0
+        with:
+          card: agent-card.json
+          profile: "draft-only"
+
       - name: Verify readiness debt is explicit
         env:
           SCORE_PASSED: ${{ steps.readiness.outputs.passed }}
           AUDIT_OUTCOME: ${{ steps.blocker-audit.outcome }}
           AUDIT_PASSED: ${{ steps.blocker-audit.outputs.passed }}
           BLOCKER_COUNT: ${{ steps.blocker-audit.outputs.blocker-count }}
+          PROFILE_OUTCOME: ${{ steps.profile-audit.outcome }}
+          PROFILE_NAME: ${{ steps.profile-audit.outputs.profile }}
+          PROFILE_PASSED: ${{ steps.profile-audit.outputs.profile-passed }}
         run: |
           test "$SCORE_PASSED" = "true"
           test "$AUDIT_OUTCOME" = "failure"
           test "$AUDIT_PASSED" = "false"
           test "$BLOCKER_COUNT" = "3"
+          test "$PROFILE_OUTCOME" = "failure"
+          test "$PROFILE_NAME" = "draft-only"
+          test "$PROFILE_PASSED" = "false"

@@ -7,6 +7,7 @@
     "AI-assisted writing teams"
   ],
   "workflow": "Turn a confirmed topic into four mechanism-distinct angles, a complete evidence-constrained draft, and a human-selected revision plan.",
+  "risk_profile": "draft-only",
   "non_goals": [
     "Publish content without human approval",
     "Invent personal experience or supporting evidence",
@@ -18,24 +19,28 @@
       "name": "content-os-pipeline",
       "purpose": "Route the four-stage workflow and enforce human gates",
       "access": "read_write",
+      "effect": "draft",
       "approval_required": true
     },
     {
       "name": "xhs-post-writer",
       "purpose": "Generate angles and evidence-constrained drafts",
       "access": "read_write",
+      "effect": "draft",
       "approval_required": true
     },
     {
       "name": "xiaohongshu-viral-director",
       "purpose": "Design platform-specific structure and distribution assets",
       "access": "read",
+      "effect": "read_only",
       "approval_required": false
     },
     {
       "name": "dbs-content",
       "purpose": "Diagnose draft quality before the creator selects revisions",
       "access": "read",
+      "effect": "read_only",
       "approval_required": false
     }
   ],
